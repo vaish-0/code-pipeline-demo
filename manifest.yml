@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodewebappdeployment
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: nodewebapp
+  template:
+    metadata:
+      name: nodewebapppod
+      labels:
+        app: nodewebapp
+    spec:
+      containers:
+        - name: nodewebappcontainer
+          image: 496746411336.dkr.ecr.us-east-1.amazonaws.com/nodejs-app:latest
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              cpu: 200m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodewebappsvc
+spec:
+  selector:
+    app: nodewebapp
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 3000
