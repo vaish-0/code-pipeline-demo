@@ -14,7 +14,7 @@ pre_build:
       - echo "Update Image tag in kube-manifest..."
       - sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$IMAGE_TAG"'@' manifest.yml
       # Update Kube config Home Directory
-      #- export KUBECONFIG=$HOME/.kube/config
+      - export KUBECONFIG=/.kube/config
   build:
     commands:
       - echo Build started on `date`
