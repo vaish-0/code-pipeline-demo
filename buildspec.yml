@@ -13,7 +13,6 @@ pre_build:
        # Update Image tag in our Kubernetes Deployment Manifest        
       - echo "Update Image tag in kube-manifest..."
       - sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$IMAGE_TAG"'@' manifest.yml
-      - export KUBECONFIG=$HOME/.kube/config
   build:
     commands:
       - echo Build started on `date`
@@ -37,6 +36,7 @@ pre_build:
       # Setup kubectl with our EKS Cluster              
       - echo "Update Kube Config"      
       - aws eks update-kubeconfig --name $EKS_CLUSTER_NAME
+      - export KUBECONFIG=$HOME/.kube/config
       # Apply changes to our Application using kubectl
       - echo "Apply changes to kube manifests"            
       - kubectl apply -f manifest.yml
