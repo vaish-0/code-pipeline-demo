@@ -13,7 +13,6 @@ pre_build:
        # Update Image tag in our Kubernetes Deployment Manifest        
       - echo "Update Image tag in kube-manifest..."
       - sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$IMAGE_TAG"'@' manifest.yml
-      # Update Kube config Home Directory
       - export KUBECONFIG=$HOME/.kube/config
   build:
     commands:
